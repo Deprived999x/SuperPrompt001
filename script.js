@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  fetch('HBS_Hair_v001.JSON')
+  fetch('HBS_Hair_v002.JSON')
     .then(response => response.json())
     .then(hairData => {
       const hairForm = document.getElementById('hairForm');
@@ -34,6 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
       function createColorSelectors() {
         const colorsFieldset = document.createElement('fieldset');
         colorsFieldset.innerHTML = '<legend>Hair Color</legend>';
+        
+        // Add color description from JSON
+        const colorCategoryDesc = document.createElement('p');
+        colorCategoryDesc.textContent = hairData.attributes.colors.description;
+        colorCategoryDesc.style.fontStyle = 'italic';
+        colorCategoryDesc.style.marginBottom = '15px';
+        colorsFieldset.appendChild(colorCategoryDesc);
         
         // Create main color category select
         const colorCategorySelect = document.createElement('select');
