@@ -1,0 +1,378 @@
+{
+  "$schema": "http://example.org/body-component-schema.json",
+  "$id": "http://example.org/hair-component.json",
+  "name": "Hair Component Definition",
+  "version": "2.0.0",
+  "description": "Comprehensive definition of hair attributes and arrangements",
+  "schemaVersion": "1.0",
+  "componentType": "hair",
+  "componentId": "hair-001",
+  "attributes": {
+    "textures": {
+      "straight": {
+        "id": "hair_texture_001",
+        "displayName": "Straight",
+        "description": "Lacking any natural bends or curves."
+      },
+      "wavy": {
+        "id": "hair_texture_002",
+        "displayName": "Wavy",
+        "description": "Characterized by gentle \"S\" shaped curves from root to tip."
+      },
+      "curly": {
+        "id": "hair_texture_003",
+        "displayName": "Curly",
+        "description": "Formed in defined spirals or ringlets."
+      },
+      "coily": {
+        "id": "hair_texture_004",
+        "displayName": "Coily",
+        "description": "Manifesting tight, spring-like formations, often with a zig-zag pattern."
+      },
+      "kinky": {
+        "id": "hair_texture_005",
+        "displayName": "Kinky",
+        "description": "Displaying very tight, angular coils in a defined zig-zag pattern."
+      }
+    },
+    "density": {
+      "fine": {
+        "id": "hair_density_001",
+        "displayName": "Fine",
+        "description": "Thin, with fewer strands per square inch."
+      },
+      "medium": {
+        "id": "hair_density_002",
+        "displayName": "Medium",
+        "description": "Average thickness, possessing a moderate amount of strands."
+      },
+      "thick": {
+        "id": "hair_density_003",
+        "displayName": "Thick",
+        "description": "Dense, with a high concentration of strands per square inch."
+      }
+    },
+    "volumes": {
+      "flat": {
+        "id": "hair_volume_001",
+        "displayName": "Flat",
+        "description": "Lying close to the head with minimal lift."
+      },
+      "slightVolume": {
+        "id": "hair_volume_002",
+        "displayName": "Slight Volume",
+        "description": "Exhibiting a small amount of lift and body."
+      },
+      "mediumVolume": {
+        "id": "hair_volume_003",
+        "displayName": "Medium Volume",
+        "description": "Representing a moderate amount of fullness."
+      },
+      "highVolume": {
+        "id": "hair_volume_004",
+        "displayName": "High Volume",
+        "description": "Displaying significant lift and body."
+      },
+      "voluminous": {
+        "id": "hair_volume_005",
+        "displayName": "Voluminous",
+        "description": "Achieving an exceptionally full and puffy aesthetic."
+      }
+    },
+    "lengths": {
+      "buzzCut": {
+        "id": "hair_length_001",
+        "displayName": "Buzz Cut",
+        "description": "Extremely short."
+      },
+      "earLength": {
+        "id": "hair_length_002",
+        "displayName": "Ear Length",
+        "description": "Approximately reaching the ears."
+      },
+      "chinLength": {
+        "id": "hair_length_003",
+        "displayName": "Chin Length",
+        "description": "Approximately reaching the chin."
+      },
+      "shoulderLength": {
+        "id": "hair_length_004",
+        "displayName": "Shoulder Length",
+        "description": "Approximately reaching the shoulders."
+      },
+      "midBackLength": {
+        "id": "hair_length_005",
+        "displayName": "Mid-Back Length",
+        "description": "Approximately reaching halfway down the back."
+      },
+      "waistLength": {
+        "id": "hair_length_006",
+        "displayName": "Waist Length",
+        "description": "Approximately reaching the waist."
+      },
+      "hipLength": {
+        "id": "hair_length_007",
+        "displayName": "Hip Length",
+        "description": "Approximately reaching the hips."
+      }
+    },
+    "colors": {
+      "blonde": {
+        "lightBlonde": {
+          "id": "hair_color_blonde_001",
+          "displayName": "Light Blonde",
+          "description": "Very pale."
+        },
+        "goldenBlonde": {
+          "id": "hair_color_blonde_002",
+          "displayName": "Golden Blonde",
+          "description": "Warm and yellow-toned."
+        },
+        "strawberryBlonde": {
+          "id": "hair_color_blonde_003",
+          "displayName": "Strawberry Blonde",
+          "description": "Reddish-blonde."
+        },
+        "mediumBlonde": {
+          "id": "hair_color_blonde_004",
+          "displayName": "Medium Blonde",
+          "description": "Neutral."
+        },
+        "ashBlonde": {
+          "id": "hair_color_blonde_005",
+          "displayName": "Ash Blonde",
+          "description": "Cool and silver or gray-toned."
+        },
+        "darkBlonde": {
+          "id": "hair_color_blonde_006",
+          "displayName": "Dark Blonde",
+          "description": "Deep and rich."
+        }
+      },
+      "red": {
+        "brightRed": {
+          "id": "hair_color_red_001",
+          "displayName": "Bright Red",
+          "description": "Vivid and intense."
+        },
+        "auburn": {
+          "id": "hair_color_red_002",
+          "displayName": "Auburn",
+          "description": "Reddish-brown with warm undertones."
+        },
+        "deepRed": {
+          "id": "hair_color_red_003",
+          "displayName": "Deep Red",
+          "description": "Rich and dark."
+        }
+      },
+      "grayWhite": {
+        "white": {
+          "id": "hair_color_graywhite_001",
+          "displayName": "White",
+          "description": "Pure, lacking pigment."
+        },
+        "gray": {
+          "id": "hair_color_graywhite_002",
+          "displayName": "Gray",
+          "description": "Mixed with pigmented strands."
+        },
+        "saltAndPepper": {
+          "id": "hair_color_graywhite_003",
+          "displayName": "Salt and Pepper",
+          "description": "Varied mixture of gray and pigmented strands."
+        },
+      "brown": {
+        "lightBrown": {
+          "id": "hair_color_brown_001",
+          "displayName": "Light Brown",
+          "description": "Pale."
+        },
+        "goldenBrown": {
+          "id": "hair_color_brown_002",
+          "displayName": "Golden Brown",
+          "description": "Warm and golden-toned."
+        },
+        "ashBrown": {
+          "id": "hair_color_brown_003",
+          "displayName": "Ash Brown",
+          "description": "Cool and silver or gray-toned."
+        },
+        "mediumBrown": {
+          "id": "hair_color_brown_004",
+          "displayName": "Medium Brown",
+          "description": "Neutral."
+        },
+        "deepBrown": {
+          "id": "hair_color_brown_005",
+          "displayName": "Deep Brown",
+          "description": "Rich and dark."
+        }
+      },
+      "black": {
+        "softBlack": {
+          "id": "hair_color_black_001",
+          "displayName": "Soft Black",
+          "description": "With a subtle sheen"
+        },
+        "deepBlack": {
+          "id": "hair_color_black_002",
+          "displayName": "Deep Black",
+          "description": "Rich and dark."
+        }
+      }
+    }
+  },
+  "arrangements": {
+    "partingStyles": {
+      "centerPart": {
+        "id": "hair_parting_001",
+        "displayName": "Center Part",
+        "description": "Divided evenly down the middle."
+      },
+      "sidePart": {
+        "id": "hair_parting_002",
+        "displayName": "Side Part",
+        "description": "Divided to one side, creating asymmetry."
+      },
+      "deepSidePart": {
+        "id": "hair_parting_003",
+        "displayName": "Deep Side Part",
+        "description": "Parted dramatically to one side."
+      },
+      "zigzagPart": {
+        "id": "hair_parting_004",
+        "displayName": "Zigzag Part",
+        "description": "Parted in a zigzag pattern."
+      },
+      "noPart": {
+        "id": "hair_parting_005",
+        "displayName": "No Part",
+        "description": "Without a defined division."
+      }
+    },
+    "bangs": {
+      "bluntBangs": {
+        "id": "hair_bangs_001",
+        "displayName": "Blunt Bangs",
+        "description": "Cut straight across, typically at eyebrow level."
+      },
+      "wispyBangs": {
+        "id": "hair_bangs_002",
+        "displayName": "Wispy Bangs",
+        "description": "Thinned with soft edges that partially reveal the forehead."
+      },
+      "shaggyBangs": {
+        "id": "hair_bangs_003",
+        "displayName": "Shaggy Bangs",
+        "description": "Textured and layered, blending into the rest of the hair."
+      },
+      "sideSweptBangs": {
+        "id": "hair_bangs_004",
+        "displayName": "Side-Swept Bangs",
+        "description": "Styled to sweep across the forehead, typically covering one side."
+      }
+    },
+    "simpleTiedHairstyles": {
+      "ponytail": {
+        "id": "hair_tied_001",
+        "displayName": "Ponytail",
+        "description": "Gathered and secured."
+      },
+      "highPonytail": {
+        "id": "hair_tied_002",
+        "displayName": "High Ponytail",
+        "description": "At the crown of the head."
+      },
+      "lowPonytail": {
+        "id": "hair_tied_003",
+        "displayName": "Low Ponytail",
+        "description": "At the nape of the neck."
+      },
+      "sidePonytail": {
+        "id": "hair_tied_004",
+        "displayName": "Side Ponytail",
+        "description": "On one side of the head."
+      },
+      "bun": {
+        "id": "hair_tied_005",
+        "displayName": "Bun",
+        "description": "Hair twisted into a circular coil and secured."
+      },
+      "classicBun": {
+        "id": "hair_tied_006",
+        "displayName": "Classic Bun",
+        "description": "Hair twisted into a circular coil and secured at the back of the head."
+      },
+      "messyBun": {
+        "id": "hair_tied_007",
+        "displayName": "Messy Bun",
+        "description": "Loosely twisted in an intentionally casual style."
+      },
+      "topKnot": {
+        "id": "hair_tied_008",
+        "displayName": "Top Knot",
+        "description": "High on the head."
+      },
+      "chignon": {
+        "id": "hair_tied_009",
+        "displayName": "Chignon",
+        "description": "Low and smooth at the nape of the neck."
+      },
+      "pigtails": {
+        "id": "hair_tied_010",
+        "displayName": "Pigtails",
+        "description": "Two sections of hair styled into two tails."
+      }
+    }
+  },
+  "compatibilityRules": {
+    "lengthBasedRules": [],
+    "textureBasedRules": [],
+    "styleBasedRules": []
+  },
+  "compatibilityLogic": {
+    "evaluationOrder": [
+      "lengthBasedRules",
+      "textureBasedRules",
+      "styleBasedRules"
+    ],
+    "severityLevels": {
+      "error": {
+        "description": "Physically impossible combination",
+        "action": "Prevent selection",
+        "uiHandling": "Disable option"
+      },
+      "warning": {
+        "description": "Difficult combination requiring additional styling",
+        "action": "Allow with caution message",
+        "uiHandling": "Show but mark with warning indicator"
+      },
+      "information": {
+        "description": "Possible but with appearance differences",
+        "action": "Notification only",
+        "uiHandling": "Show with information indicator"
+      }
+    },
+    "specialCases": []
+  },
+  "uiImplementation": {
+    "selectionProcess": {
+      "strategy": "proactiveConstraint",
+      "description": "As users select top-level options, conflicting choices are made unavailable",
+      "processing": "real-time"
+    },
+    "selectionSequence": {
+      "recommendedOrder": [
+        "attributes.textures",
+        "attributes.density",
+        "attributes.volumes",
+        "attributes.lengths",
+        "attributes.colors",
+        "arrangements.partingStyles",
+        "arrangements.bangs",
+        "arrangements.simpleTiedHairstyles"
+      ]
+    }
+  }
+}

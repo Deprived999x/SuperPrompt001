@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hair Style Prompt Generator</title>
+</head>
+<body>
+    <h1>Hair Style Prompt Generator</h1>
+
+    <form id="hairForm">
+        <fieldset>
+            <legend>Hair Attributes</legend>
+
+            <label for="textures">Texture:</label>
+            <label for="texturesDescription">Description</label>
+            <select id="textures" name="textures">
+                <option value="">Select Texture</option>
+                </select>
+             <label for="density">Density:</label>
+             <label for="densityDescription">Description</label>
+            <select id="density" name="density">
+                <option value="">Select Density</option>
+            </select>
+             <label for="volumes">Volume:</label>
+             <label for="volumesDescription">Description</label>
+            <select id="volumes" name="volumes">
+                <option value="">Select Volume</option>
+            </select>
+             <label for="lengths">Length:</label>
+             <label for="lengthsDescription">Description</label>
+            <select id="lengths" name="lengths">
+                <option value="">Select Length</option>
+            </select>
+           </fieldset>
+
+        <fieldset>
+            <legend>Arrangements</legend>
+            </fieldset>
+
+        <button type="button" id="generatePrompt">Generate Prompt</button>
+    </form>
+
+    <h2>Generated Prompt:</h2>
+    <div id="promptOutput"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
