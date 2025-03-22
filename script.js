@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Function to populate a select element with options from the JSON data
       function populateSelect(selectElement, data) {
         for (const key in data) {
-          if (data.hasOwnProperty(key)) {
+          if (data.hasOwnProperty(key) && key !== 'description') {
             const option = document.createElement('option');
             option.value = key;
             option.textContent = data[key].displayName;
@@ -38,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add color description from JSON
         const colorCategoryDesc = document.createElement('p');
         colorCategoryDesc.textContent = hairData.attributes.colors.description;
-        colorCategoryDesc.style.fontStyle = 'italic';
-        colorCategoryDesc.style.marginBottom = '15px';
+        colorCategoryDesc.className = 'category-description';
         colorsFieldset.appendChild(colorCategoryDesc);
         
         // Create main color category select
@@ -138,6 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
       // Function to create arrangement selectors
       function createArrangementSelectors() {
         const arrangementsFieldset = document.querySelector('fieldset:nth-of-type(2)');
+        
+        // Add arrangements description
+        const arrangementsDesc = document.createElement('p');
+        arrangementsDesc.textContent = hairData.arrangements.description;
+        arrangementsDesc.className = 'category-description';
+        arrangementsFieldset.appendChild(arrangementsDesc);
         
         // Create parting style selector
         const partingDiv = document.createElement('div');
@@ -287,6 +292,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
       
+      // Add category descriptions
+      function addCategoryDescriptions() {
+        const attributesFieldset = document.querySelector('fieldset:nth-of-type(1)');
+        
+        // Add texture description
+        const textureDesc = document.createElement('p');
+        textureDesc.textContent = hairData.attributes.textures.description;
+        textureDesc.className = 'category-description';
+        attributesFieldset.insertBefore(textureDesc, attributesFieldset.firstChild);
+        
+        // Add density description
+        const densityDesc = document.createElement('p');
+        densityDesc.textContent = hairData.attributes.density.description;
+        densityDesc.style.fontStyle = 'italic';
+        densityDesc.style.marginBottom = '15px';
+        const densityGroup = document.querySelector('.form-group:nth-of-type(2)');
+        densityGroup.insertBefore(densityDesc, densityGroup.firstChild);
+        
+        // Add volume description
+        const volumeDesc = document.createElement('p');
+        volumeDesc.textContent = hairData.attributes.volumes.description;
+        volumeDesc.style.fontStyle = 'italic';
+        volumeDesc.style.marginBottom = '15px';
+        const volumeGroup = document.querySelector('.form-group:nth-of-type(3)');
+        volumeGroup.insertBefore(volumeDesc, volumeGroup.firstChild);
+        
+        // Add length description
+        const lengthDesc = document.createElement('p');
+        lengthDesc.textContent = hairData.attributes.lengths.description;
+        lengthDesc.style.fontStyle = 'italic';
+        lengthDesc.style.marginBottom = '15px';
+        const lengthGroup = document.querySelector('.form-group:nth-of-type(4)');
+        lengthGroup.insertBefore(lengthDesc, lengthGroup.firstChild);
+      }
+        
       // Populate the base select elements
       populateSelect(texturesSelect, hairData.attributes.textures);
       populateSelect(densitySelect, hairData.attributes.density);
@@ -295,8 +335,241 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Setup descriptions and create additional UI elements
       setupAttributeDescriptions();
+      addCategoryDescriptions();
       createColorSelectors();
       createArrangementSelectors();
+      setupCompatibilityListeners();
+      
+      // Apply compatibility rules based on selections
+      function applyCompatibilityRules() {
+        // Clear any existing messages
+        const existingMessages = document.querySelectorAll('.compatibility-message');
+        existingMessages.forEach(msg => msg.remove());
+        
+        // Reset all disabled options
+        const allSelects = document.querySelectorAll('select');
+        allSelects.forEach(select => {
+          Array.from(select.options).forEach(option => {
+            option.disabled = false;
+            option.style.color = '';
+          });
+        });
+        
+        // Get current selections
+        const currentSelections = {
+          textures: texturesSelect.value,
+          density: densitySelect.value,
+          volumes: volumesSelect.value,
+          lengths: lengthsSelect.value,
+          colorCategory: document.getElementById('colorCategory').value,
+          colorShade: document.getElementById('colorShade').value,
+          partingStyle: document.getElementById('partingStyle').value,
+          bangsStyle: document.getElementById('bangsStyle').value,
+          hairstyle: document.getElementById('hairstyle').value
+        };
+        
+        // Check length-based rules
+        if (currentSelections.lengths) {
+          const lengthRules = hairData.compatibilityRules.lengthBasedRules.filter(
+            rule => rule.condition.attribute === 'lengths' && rule.condition.value === currentSelections.lengths
+          );
+          
+          lengthRules.forEach(rule => {
+            rule.incompatibleWith.forEach(incompatibility => {
+              const [category, subcategory] = incompatibility.category.split('.');
+              let selectElement;
+              
+              // Determine which select element to update
+              if (category === 'arrangements') {
+                if (subcategory === 'simpleTiedHairstyles') {
+                  selectElement = document.getElementById('hairstyle');
+                } else if (subcategory === 'bangs') {
+                  selectElement = document.getElementById('bangsStyle');
+                } else if (subcategory === 'partingStyles') {
+                  selectElement = document.getElementById('partingStyle');
+                }
+              } else {
+                // Handle attributes
+                selectElement = document.getElementById(subcategory);
+              }
+              
+              if (selectElement) {
+                incompatibility.values.forEach(value => {
+                  const option = Array.from(selectElement.options).find(opt => opt.value === value);
+                  if (option) {
+                    if (incompatibility.severity === 'error') {
+                      option.disabled = true;
+                      option.style.color = '#999';
+                    } else if (incompatibility.severity === 'warning') {
+                      option.style.color = 'orange';
+                    }
+                  }
+                });
+                
+                // Add compatibility message if this select has a value that is incompatible
+                if (selectElement.value && incompatibility.values.includes(selectElement.value)) {
+                  const messageDiv = document.createElement('div');
+                  messageDiv.className = 'compatibility-message';
+                  messageDiv.style.color = incompatibility.severity === 'error' ? 'red' : 'orange';
+                  messageDiv.style.fontStyle = 'italic';
+                  messageDiv.style.marginTop = '5px';
+                  messageDiv.textContent = incompatibility.message;
+                  
+                  selectElement.parentNode.appendChild(messageDiv);
+                  
+                  if (incompatibility.severity === 'error') {
+                    selectElement.value = '';
+                    // Trigger change event to update descriptions
+                    const event = new Event('change');
+                    selectElement.dispatchEvent(event);
+                  }
+                }
+              }
+            });
+          });
+        }
+        
+        // Check texture-based rules
+        if (currentSelections.textures) {
+          const textureRules = hairData.compatibilityRules.textureBasedRules.filter(
+            rule => rule.condition.attribute === 'textures' && rule.condition.value === currentSelections.textures
+          );
+          
+          textureRules.forEach(rule => {
+            rule.incompatibleWith.forEach(incompatibility => {
+              const selectElement = document.getElementById(incompatibility.category);
+              
+              if (selectElement) {
+                incompatibility.values.forEach(value => {
+                  const option = Array.from(selectElement.options).find(opt => opt.value === value);
+                  if (option) {
+                    if (incompatibility.severity === 'error') {
+                      option.disabled = true;
+                      option.style.color = '#999';
+                    } else if (incompatibility.severity === 'warning') {
+                      option.style.color = 'orange';
+                    }
+                  }
+                });
+                
+                // Add compatibility message if this select has a value that is incompatible
+                if (selectElement.value && incompatibility.values.includes(selectElement.value)) {
+                  const messageDiv = document.createElement('div');
+                  messageDiv.className = 'compatibility-message';
+                  messageDiv.style.color = incompatibility.severity === 'error' ? 'red' : 'orange';
+                  messageDiv.style.fontStyle = 'italic';
+                  messageDiv.style.marginTop = '5px';
+                  messageDiv.textContent = incompatibility.message;
+                  
+                  selectElement.parentNode.appendChild(messageDiv);
+                  
+                  if (incompatibility.severity === 'error') {
+                    selectElement.value = '';
+                    // Trigger change event to update descriptions
+                    const event = new Event('change');
+                    selectElement.dispatchEvent(event);
+                  }
+                }
+              }
+            });
+          });
+        }
+        
+        // Check style-based rules
+        if (currentSelections.partingStyle || currentSelections.bangsStyle || currentSelections.hairstyle) {
+          // Check partingStyle rules
+          if (currentSelections.partingStyle) {
+            const partingRules = hairData.compatibilityRules.styleBasedRules.filter(
+              rule => rule.condition.category === 'arrangements.partingStyles' && 
+                     rule.condition.value === currentSelections.partingStyle
+            );
+            
+            partingRules.forEach(rule => processStyleRule(rule, currentSelections));
+          }
+          
+          // Check bangsStyle rules
+          if (currentSelections.bangsStyle) {
+            const bangsRules = hairData.compatibilityRules.styleBasedRules.filter(
+              rule => rule.condition.category === 'arrangements.bangs' && 
+                     rule.condition.value === currentSelections.bangsStyle
+            );
+            
+            bangsRules.forEach(rule => processStyleRule(rule, currentSelections));
+          }
+          
+          // Check hairstyle rules
+          if (currentSelections.hairstyle) {
+            const hairstyleRules = hairData.compatibilityRules.styleBasedRules.filter(
+              rule => rule.condition.category === 'arrangements.simpleTiedHairstyles' && 
+                     rule.condition.value === currentSelections.hairstyle
+            );
+            
+            hairstyleRules.forEach(rule => processStyleRule(rule, currentSelections));
+          }
+        }
+      }
+      
+      function processStyleRule(rule, currentSelections) {
+        rule.incompatibleWith.forEach(incompatibility => {
+          const [category, subcategory] = incompatibility.category.split('.');
+          let selectElement;
+          
+          // Determine which select element to update
+          if (category === 'arrangements') {
+            if (subcategory === 'simpleTiedHairstyles') {
+              selectElement = document.getElementById('hairstyle');
+            } else if (subcategory === 'bangs') {
+              selectElement = document.getElementById('bangsStyle');
+            } else if (subcategory === 'partingStyles') {
+              selectElement = document.getElementById('partingStyle');
+            }
+          } else {
+            // Handle attributes
+            selectElement = document.getElementById(subcategory);
+          }
+          
+          if (selectElement) {
+            incompatibility.values.forEach(value => {
+              const option = Array.from(selectElement.options).find(opt => opt.value === value);
+              if (option) {
+                if (incompatibility.severity === 'error') {
+                  option.disabled = true;
+                  option.style.color = '#999';
+                } else if (incompatibility.severity === 'warning') {
+                  option.style.color = 'orange';
+                }
+              }
+            });
+            
+            // Add compatibility message if this select has a value that is incompatible
+            if (selectElement.value && incompatibility.values.includes(selectElement.value)) {
+              const messageDiv = document.createElement('div');
+              messageDiv.className = 'compatibility-message';
+              messageDiv.style.color = incompatibility.severity === 'error' ? 'red' : 'orange';
+              messageDiv.style.fontStyle = 'italic';
+              messageDiv.style.marginTop = '5px';
+              messageDiv.textContent = incompatibility.message;
+              
+              selectElement.parentNode.appendChild(messageDiv);
+              
+              if (incompatibility.severity === 'error') {
+                selectElement.value = '';
+                // Trigger change event to update descriptions
+                const event = new Event('change');
+                selectElement.dispatchEvent(event);
+              }
+            }
+          }
+        });
+      }
+      
+      // Add change event listeners to all selects to apply compatibility rules
+      function setupCompatibilityListeners() {
+        const allSelects = document.querySelectorAll('select');
+        allSelects.forEach(select => {
+          select.addEventListener('change', applyCompatibilityRules);
+        });
+      }
       
       // Event listener for the "Generate Prompt" button
       generatePromptButton.addEventListener('click', function() {
