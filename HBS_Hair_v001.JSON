@@ -181,7 +181,8 @@
           "id": "hair_color_graywhite_003",
           "displayName": "Salt and Pepper",
           "description": "Varied mixture of gray and pigmented strands."
-        },
+        }
+      },
       "brown": {
         "lightBrown": {
           "id": "hair_color_brown_001",
@@ -196,7 +197,7 @@
         "ashBrown": {
           "id": "hair_color_brown_003",
           "displayName": "Ash Brown",
-          "description": "Cool and silver or gray-toned."
+          "description": "Cool and silver or gray-toned brown."
         },
         "mediumBrown": {
           "id": "hair_color_brown_004",
