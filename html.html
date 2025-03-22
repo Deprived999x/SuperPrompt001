@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hair Style Prompt Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            color: #333;
+        }
+        
+        fieldset {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+        
+        select {
+            padding: 5px;
+            margin: 5px 0;
+            width: 250px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 120px;
+            margin-right: 10px;
+        }
+        
+        p {
+            margin: 5px 0 15px 130px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        #promptOutput {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hair Style Prompt Generator</h1>
+    
+    <form id="hairForm">
+        <fieldset>
+            <legend>Hair Attributes</legend>
+            
+            <div class="form-group">
+                <label for="textures">Texture:</label>
+                <select id="textures" name="textures">
+                    <option value="">Select Texture</option>
+                </select>
+                <p id="texturesDescription"></p>
+            </div>
+            
+            <div class="form-group">
+                <label for="density">Density:</label>
+                <select id="density" name="density">
+                    <option value="">Select Density</option>
+                </select>
+                <p id="densityDescription"></p>
+            </div>
+            
+            <div class="form-group">
+                <label for="volumes">Volume:</label>
+                <select id="volumes" name="volumes">
+                    <option value="">Select Volume</option>
+                </select>
+                <p id="volumesDescription"></p>
+            </div>
+            
+            <div class="form-group">
+                <label for="lengths">Length:</label>
+                <select id="lengths" name="lengths">
+                    <option value="">Select Length</option>
+                </select>
+                <p id="lengthsDescription"></p>
+            </div>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Arrangements</legend>
+            <!-- This will be populated by JavaScript -->
+        </fieldset>
+        
+        <button type="button" id="generatePrompt">Generate Prompt</button>
+    </form>
+    
+    <h2>Generated Prompt:</h2>
+    <div id="promptOutput"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
